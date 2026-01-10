@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SUJIT online book — Demo</title>
+    <style>
+      :root {
+        --accent: #0b6cff;
+        --muted: #6b7280;
+        --card-bg: #ffffff;
+        --page-bg: #f5f7fb;
+        --radius: 10px;
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--page-bg);
+        color: #0f172a;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 28px auto;
+        padding: 16px;
+      }
+
+      /* Header */
+      header {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .logo {
+        font-weight: 800;
+        font-size: 20px;
+        color: var(--accent);
+      }
+      .search-bar {
+        flex: 1;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .search-bar input {
+        flex: 1;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid #e6eefb;
+      }
+      .search-bar button {
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: none;
+        background: var(--accent);
+        color: white;
+        cursor: pointer;
+      }
+
+      /* Layout */
+      .layout {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 18px;
+        margin-top: 18px;
+      }
+      @media (max-width: 860px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background: var(--card-bg);
+        padding: 14px;
+        border-radius: var(--radius);
+        box-shadow: 0 6px 18px rgba(12, 14, 26, 0.06);
+      }
+      .sidebar h3 {
+        margin: 0 0 10px 0;
+      }
+      .filter-group {
+        margin-bottom: 12px;
+      }
+      .filter-group label {
+        display: block;
+        margin: 6px 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* Main content */
+      .main {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+      .controls .sort {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .books-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 14px;
+      }
+
+      .book-card {
+        background: var(--card-bg);
+        padding: 12px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(12, 14, 26, 0.06);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .book-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      .book-title {
+        font-weight: 700;
+        font-size: 16px;
+      }
+      .book-author {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+      }
+      .price {
+        font-weight: 800;
+      }
+      .btn {
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: white;
+      }
+      .btn-outline {
+        background: white;
+        border: 1px solid #e6eefb;
+      }
+
+      /* Cart drawer (simple) */
+      .cart-toggle {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background: var(--accent);
+        color: white;
+        padding: 12px 14px;
+        border-radius: 999px;
+        box-shadow: 0 8px 30px rgba(11, 108, 255, 0.16);
+        cursor: pointer;
+      }
+      .cart-drawer {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        width: 320px;
+        max-height: 60vh;
+        background: white;
+        border-radius: 12px;
+        padding: 12px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        overflow: auto;
+        display: none;
+      }
+      .cart-drawer h4 {
+        margin: 0 0 8px 0;
+      }
+      .cart-item {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f3f8;
+      }
+      .cart-item img {
+        width: 48px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 6px;
+      }
+      .cart-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+      }
+
+      /* Modal */
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(2, 6, 23, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .modal {
+        background: white;
+        padding: 18px;
+        border-radius: 12px;
+        max-width: 720px;
+        width: 100%;
+        box-shadow: 0 12px 40px rgba(2, 6, 23, 0.2);
+      }
+      .modal img {
+        width: 200px;
+        height: 260px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      .modal .info {
+        padding-left: 12px;
+        flex: 1;
+      }
+      .modal .top {
+        display: flex;
+        gap: 12px;
+      }
+
+      /* small helpers */
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .empty {
+        padding: 40px;
+        text-align: center;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header>
+        <div class="logo">BookBox</div>
+        <div class="search-bar">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search books, authors or ISBN..."
+          />
+          <button id="searchBtn">Search</button>
+        </div>
+        <div>
+          <button class="btn btn-outline" id="showAllBtn">Show All</button>
+        </div>
+      </header>
+
+      <!-- Layout -->
+      <div class="layout">
+        <!-- Sidebar filters -->
+        <aside class="sidebar">
+          <h3>Filters</h3>
+
+          <div class="filter-group">
+            <label>Category</label>
+            <select id="categoryFilter">
+              <option value="">— All —</option>
+              <option>Fiction</option>
+              <option>Non-Fiction</option>
+              <option>Science</option>
+              <option>Programming</option>
+              <option>History</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Price Range (₹)</label>
+            <input
+              id="minPrice"
+              type="number"
+              placeholder="Min"
+              style="
+                width: 40%;
+                padding: 8px;
+                border-radius: 6px;
+                border: 1px solid #eef6ff;
+              "
+            />
+            -
+            <input
+              id="maxPrice"
+              type="number"
+              placeholder="Max"
+              style="
+                width: 40%;
+                padding: 8px;
+                border-radius: 6px;
+                border: 1px solid #eef6ff;
+              "
+            />
+          </div>
+
+          <div class="filter-group">
+            <label>Sort By</label>
+            <select id="sortSelect">
+              <option value="relevance">Relevance</option>
+              <option value="price-asc">Price — Low to High</option>
+              <option value="price-desc">Price — High to Low</option>
+              <option value="title">Title (A→Z)</option>
+            </select>
+          </div>
+
+          <div style="margin-top: 10px">
+            <button
+              id="applyFilters"
+              class="btn btn-primary"
+              style="width: 100%"
+            >
+              Apply Filters
+            </button>
+          </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="main">
+          <div class="controls">
+            <div class="muted" id="resultsInfo">Showing 0 books</div>
+            <div class="sort">
+              <label class="muted">View:</label>
+              <button id="gridView" class="btn btn-outline">Grid</button>
+              <button id="listView" class="btn btn-outline">List</button>
+            </div>
+          </div>
+
+          <div id="booksGrid" class="books-grid">
+            <!-- JS will render book cards here -->
+          </div>
+
+          <div id="emptyState" class="empty" style="display: none">
+            No books found. Try different filters or search keywords.
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Cart toggle + drawer -->
+    <div class="cart-toggle" id="cartToggle">
+      Cart (<span id="cartCount">0</span>)
+    </div>
+    <div class="cart-drawer" id="cartDrawer">
+      <h4>Your Cart</h4>
+      <div id="cartItems"></div>
+      <div class="cart-footer">
+        <div class="muted">Total:</div>
+        <div id="cartTotal" style="font-weight: 800">₹0</div>
+      </div>
+      <div style="margin-top: 10px">
+        <button id="checkoutBtn" class="btn btn-primary" style="width: 100%">
+          Checkout (Demo)
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal for book details -->
+    <div class="modal-backdrop" id="modalBackdrop">
+      <div class="modal" role="dialog" aria-modal="true">
+        <div class="top">
+          <img id="modalImg" src="" alt="book" />
+          <div class="info">
+            <h3 id="modalTitle"></h3>
+            <div class="muted" id="modalAuthor"></div>
+            <p id="modalDesc" style="margin-top: 8px"></p>
+            <div style="margin-top: 10px" class="price-row">
+              <div
+                style="font-size: 18px; font-weight: 800"
+                id="modalPrice"
+              ></div>
+              <div>
+                <button id="modalAdd" class="btn btn-primary">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div style="margin-top: 8px" class="muted">
+              ISBN: <span id="modalISBN"></span>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: right; margin-top: 12px">
+          <button id="modalClose" class="btn btn-outline">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Sample data: small array of book objects.
+      const books = [
+        {id:1,title:"The Alchemist",author:"Paulo Coelho",category:"Fiction",price:249,img:"https://via.placeholder.com/300x400?text=Alchemist",desc:"A modern classic about following your dream.",isbn:"9780061122415"},
+        {id:2,title:"Clean Code",author:"Robert C. Martin",category:"Programming",price:899,img:"https://via.placeholder.com/300x400?text=Clean+Code",desc:"A handbook of agile software craftsmanship.",isbn:"9780132350884"},
+        {id:3,title:"A Brief History of Time",author:"Stephen Hawking",category:"Science",price:399,img:"https://via.placeholder.com/300x400?text=Brief+History",desc:"From the Big Bang to black holes.",isbn:"9780553380163"},
+        {id:4,title:"The Great Gatsby",author:"F. Scott Fitzgerald",category:"Fiction",price:199,img:"https://via.placeholder.com/300x400?text=Gatsby",desc:"A portrait of the Roaring Twenties.",isbn:"9780743273565"},
+        {id:5,title:"Sapiens",author:"Yuval Noah Harari",category:"History",price:499,img:"https://via.placeholder.com/300x400?text=Sapiens",desc:"A brief history of humankind.",isbn:"9780062316097"},
+        {id:6,title:"You Don't Know JS",author:"Kyle Simpson",category:"Programming",price:599,img:"https://via.placeholder.com/300x400?text=YDKJS",desc:"A deep dive into JavaScript.",isbn:"9781491904244"},
+        {id:7,title:"Atomic Habits",author:"James Clear",category:"Non-Fiction",price:349,img:"https://via.placeholder.com/300x400?text=Atomic+Habits",desc:"Tiny changes, remarkable results.",isbn:"9780735211292"},
+        {id:8,title:"Introduction to Algorithms",author:"Cormen et al.",category:"Programming",price:1299,img:"https://via.placeholder.com/300x400?text=CLRS",desc:"Comprehensive algorithms textbook.",isbn:"9780262033848"}
+      ];
+
+      // State
+      let filtered = [...books];
+      let cart = {};
+
+      // DOM refs
+      const booksGrid = document.getElementById('booksGrid');
+      const resultsInfo = document.getElementById('resultsInfo');
+      const emptyState = document.getElementById('emptyState');
+      const cartToggle = document.getElementById('cartToggle');
+      const cartDrawer = document.getElementById('cartDrawer');
+      const cartCount = document.getElementById('cartCount');
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+
+      // Modal refs
+      const modalBackdrop = document.getElementById('modalBackdrop');
+      const modalImg = document.getElementById('modalImg');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalAuthor = document.getElementById('modalAuthor');
+      const modalDesc = document.getElementById('modalDesc');
+      const modalPrice = document.getElementById('modalPrice');
+      const modalISBN = document.getElementById('modalISBN');
+      let modalCurrentBookId = null;
+
+      // Render functions
+      function renderBooks(list){
+        booksGrid.innerHTML = '';
+        if(list.length === 0){
+          emptyState.style.display = 'block';
+        } else {
+          emptyState.style.display = 'none';
+        }
+        list.forEach(book=>{
+          const card = document.createElement('div');
+          card.className = 'book-card';
+          // card inner HTML (image, title, author, price, buttons)
+          card.innerHTML = `
+            <img src="${book.img}" alt="${escapeHtml(book.title)}">
+            <div class="book-title">${escapeHtml(book.title)}</div>
+            <div class="book-author">${escapeHtml(book.author)} • <span class="muted">${escapeHtml(book.category)}</span></div>
+            <div class="price-row">
+              <div class="price">₹${book.price}</div>
+              <div>
+                <button class="btn btn-outline btn-detail" data-id="${book.id}">View</button>
+                <button class="btn btn-primary btn-add" data-id="${book.id}">Add</button>
+              </div>
+            </div>
+          `;
+          booksGrid.appendChild(card);
+        });
+        resultsInfo.textContent = Showing ${list.length} book(s);
+        attachCardListeners();
+      }
+
+      // escape helper (small)
+      function escapeHtml(text){
+        return String(text).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+      }
+
+      // Attach button listeners for newly rendered cards
+      function attachCardListeners(){
+        document.querySelectorAll('.btn-add').forEach(btn=>{
+          btn.onclick = ()=> addToCart(parseInt(btn.dataset.id));
+        });
+        document.querySelectorAll('.btn-detail').forEach(btn=>{
+          btn.onclick = ()=> openModal(parseInt(btn.dataset.id));
+        });
+      }
+
+      // Filters & search
+      function applyFilters(){
+        const q = document.getElementById('searchInput').value.trim().toLowerCase();
+        const category = document.getElementById('categoryFilter').value;
+        const minP = Number(document.getElementById('minPrice').value || 0);
+        const maxP = Number(document.getElementById('maxPrice').value || 0);
+        const sort = document.getElementById('sortSelect').value;
+
+        filtered = books.filter(b=>{
+          const matchesQuery = q === '' || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q) || b.isbn.includes(q);
+          const matchesCategory = category === '' || b.category === category;
+          const matchesMin = minP === 0 || b.price >= minP;
+          const matchesMax = maxP === 0 || b.price <= maxP;
+          return matchesQuery && matchesCategory && matchesMin && matchesMax;
+        });
+
+        // Sorting
+        if(sort === 'price-asc') filtered.sort((a,b)=>a.price-b.price);
+        else if(sort === 'price-desc') filtered.sort((a,b)=>b.price-a.price);
+        else if(sort === 'title') filtered.sort((a,b)=>a.title.localeCompare(b.title));
+
+        renderBooks(filtered);
+      }
+
+      // Simple cart logic
+      function addToCart(bookId, qty=1){
+        const book = books.find(b=>b.id===bookId);
+        if(!book) return;
+        if(cart[bookId]) cart[bookId].qty += qty;
+        else cart[bookId] = {book, qty};
+        updateCartUI();
+      }
+
+      function removeFromCart(bookId){
+        delete cart[bookId];
+        updateCartUI();
+      }
+
+      function updateCartUI(){
+        const items = Object.values(cart);
+        cartItems.innerHTML = '';
+        let total = 0;
+        if(items.length === 0){
+          cartItems.innerHTML = '<div class="muted">Cart is empty</div>';
+        } else {
+          items.forEach(ci=>{
+            const line = document.createElement('div');
+            line.className = 'cart-item';
+            line.innerHTML = `
+              <img src="${ci.book.img}" alt="${escapeHtml(ci.book.title)}">
+              <div style="flex:1">
+                <div style="font-weight:700">${escapeHtml(ci.book.title)}</div>
+                <div class="muted">${escapeHtml(ci.book.author)}</div>
+                <div style="margin-top:6px;display:flex;gap:8px;align-items:center">
+                  <div>Qty: <strong>${ci.qty}</strong></div>
+                  <button class="btn btn-outline btn-small" data-id="${ci.book.id}" style="padding:6px;border-radius:6px">Remove</button>
+                </div>
+              </div>
+              <div style="font-weight:800">₹${ci.book.price * ci.qty}</div>
+            `;
+            cartItems.appendChild(line);
+          });
+          // attach remove listeners
+          cartItems.querySelectorAll('.btn-small').forEach(b=>{
+            b.onclick = ()=> removeFromCart(parseInt(b.dataset.id));
+          });
+        }
+        total = items.reduce((s,ci)=>s + ci.book.price * ci.qty, 0);
+        cartTotal.textContent = ₹${total};
+        cartCount.textContent = items.reduce((s,ci)=>s+ci.qty,0);
+      }
+
+      // Modal functions
+      function openModal(bookId){
+        const book = books.find(b=>b.id===bookId);
+        if(!book) return;
+        modalCurrentBookId = bookId;
+        modalImg.src = book.img;
+        modalTitle.textContent = book.title;
+        modalAuthor.textContent = book.author + ' • ' + book.category;
+        modalDesc.textContent = book.desc;
+        modalPrice.textContent = '₹' + book.price;
+        modalISBN.textContent = book.isbn;
+        modalBackdrop.style.display = 'flex';
+      }
+      function closeModal(){ modalBackdrop.style.display = 'none'; modalCurrentBookId = null; }
+
+      // Event bindings
+      document.getElementById('searchBtn').onclick = applyFilters;
+      document.getElementById('applyFilters').onclick = applyFilters;
+      document.getElementById('showAllBtn').onclick = ()=>{
+        // clear filters and show all
+        document.getElementById('searchInput').value = '';
+        document.getElementById('categoryFilter').value = '';
+        document.getElementById('minPrice').value = '';
+        document.getElementById('maxPrice').value = '';
+        document.getElementById('sortSelect').value = 'relevance';
+        filtered = [...books];
+        renderBooks(filtered);
+      };
+
+      // Cart drawer toggle
+      cartToggle.onclick = ()=> {
+        cartDrawer.style.display = cartDrawer.style.display === 'block' ? 'none' : 'block';
+      };
+
+      // Modal buttons
+      document.getElementById('modalClose').onclick = closeModal;
+      modalBackdrop.onclick = (e)=> {
+        if(e.target === modalBackdrop) closeModal();
+      };
+      document.getElementById('modalAdd').onclick = ()=> {
+        if(modalCurrentBookId) addToCart(modalCurrentBookId);
+        closeModal();
+      };
+
+      // Checkout demo
+      document.getElementById('checkoutBtn').onclick = ()=> {
+        alert('Checkout is a demo. Implement server/payment flow for production.');
+      };
+
+      // Initial render
+      renderBooks(books);
+      updateCartUI();
+
+      // Extra: Enter key triggers search
+      document.getElementById('searchInput').addEventListener('keydown', e=>{
+        if(e.key === 'Enter') applyFilters();
+      });
+    </script>
+  </body>
+</html>

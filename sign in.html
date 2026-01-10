@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<head>
+    <title>Web Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to right, #dfe9f3, #ffffff);
+    }
+
+    .container {
+      width: 800px;
+      height: 500px;
+      background: #fff;
+      border-radius: 15px;
+      display: flex;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .sign-in {
+      flex: 1;
+      padding: 40px;
+    }
+
+    .sign-in h2 {
+      margin-bottom: 20px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .social-icons a {
+      text-decoration: none;
+      font-size: 18px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 20px;
+      color: #333;
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      background: #6a11cb;
+      color: #fff;
+      border-color: #6a11cb;
+    }
+
+    .input-box {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .forgot {
+      margin: 10px 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .btn {
+      background: #6a11cb;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #2575fc;
+    }
+
+    .right-panel {
+      flex: 1;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .right-panel h2 {
+      margin-bottom: 20px;
+    }
+
+    .right-panel p {
+      margin-bottom: 30px;
+    }
+
+    .right-panel .btn-outline {
+      background: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+      padding: 12px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .right-panel .btn-outline:hover {
+      background: #fff;
+      color: #2575fc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sign In Form -->
+    <div class="sign-in">
+      <h2>Sign In</h2>
+      <div class="social-icons">
+        <a href="#">G+</a>
+        <a href="#">f</a>
+        <a href="#">gh</a>
+        <a href="#">in</a>
+      </div>
+      <p>or use your email password</p>
+      <form>
+        <div class="input-box">
+          <input type="email" placeholder="Email" required>
+        </div>
+        <div class="input-box">
+          <input type="password" placeholder="Password" required>
+        </div>
+        <p class="forgot">Forgot Your Password?</p>
+        <button type="submit" class="btn">SIGN IN</button>
+      </form>
+    </div>
+
+    <!-- Sign Up Panel -->
+    <div class="right-panel">
+      <h2>Hello, Friend!</h2>
+      <p>Register with your personal details to use all of site features</p>
+      <button class="btn-outline">SIGN UP</button>
+    </div>
+  </div>
+</body>
+</html>

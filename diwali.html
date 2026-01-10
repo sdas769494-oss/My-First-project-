@@ -1,0 +1,160 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>4D Diwali Wish — Debanjana</title>
+  <style>
+    :root{
+      --bg1:#0b0820; --bg2:#2a0633; --gold:#ffd166; --rose:#ff6b8a; --card:#fff8ea;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Noto Sans, Arial;
+      background: radial-gradient(800px 400px at 15% 20%, rgba(255,92,124,0.06), transparent 8%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      display:flex;align-items:center;justify-content:center;padding:28px;color:var(--card);
+    }.stage{
+  width:100%;max-width:980px;padding:36px;border-radius:20px;position:relative;overflow:hidden;
+  background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  box-shadow:0 20px 40px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.03);
+}
+
+h1{margin:0;font-size:2.6rem;letter-spacing:0.4px}
+p.lead{margin:8px 0 20px 0;opacity:0.95}
+
+/* 4D name container */
+.name-4d{position:relative;height:160px;display:flex;align-items:center;justify-content:center;perspective:1000px}
+
+.layer{
+  position:absolute;left:50%;top:50%;transform-style:preserve-3d;transform-origin:center center;
+  font-weight:900;font-size:54px;padding:8px 20px;border-radius:8px;pointer-events:none;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 12px 30px rgba(0,0,0,0.55);
+}
+
+/* four depth layers - subtle color shifts for 4D effect */
+.layer.l1{transform: translate3d(-50%,-50%,120px) rotateX(8deg); background:linear-gradient(90deg,#ffd89b,#ff6a88)}
+.layer.l2{transform: translate3d(-50%,-50%,60px) rotateX(4deg); background:linear-gradient(90deg,#ffe6b3,#ff8aa0); font-size:64px; opacity:0.9}
+.layer.l3{transform: translate3d(-50%,-50%,20px); background:linear-gradient(90deg,#fff3d6,#ff9db0); font-size:72px; opacity:0.96}
+.layer.l4{transform: translate3d(-50%,-50%,0px); background:linear-gradient(90deg,#fffaf0,#ffb3c8); font-size:80px; opacity:1}
+
+/* subtle entrance animation */
+.layer{transition:transform 450ms cubic-bezier(.2,.9,.25,1), filter 350ms}
+
+/* diya and message */
+.diya-row{display:flex;align-items:center;gap:24px;justify-content:center;margin-top:18px}
+.diya{width:120px}
+
+.wish-box{max-width:640px;margin:18px auto 6px;text-align:center}
+.wish-box p{margin:0;font-size:1.05rem}
+
+/* sparkles */
+.sparkle{position:absolute;width:8px;height:8px;border-radius:50%;filter:blur(0.6px);opacity:0.95}
+.s1{left:6%;top:10%;background:linear-gradient(45deg,var(--gold),var(--rose));animation:rise1 2400ms infinite}
+.s2{left:88%;top:18%;background:linear-gradient(45deg,var(--rose),var(--gold));animation:rise2 2600ms infinite}
+.s3{left:32%;top:4%;background:linear-gradient(45deg,var(--gold),#fff);animation:rise3 2000ms infinite}
+
+@keyframes rise1{0%{transform:translateY(0) scale(.6);opacity:0}20%{opacity:1}80%{transform:translateY(-120px) scale(1.2);opacity:0.9}100%{opacity:0}}
+@keyframes rise2{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:1}85%{transform:translateY(-140px) scale(1.1);opacity:0.85}100%{opacity:0}}
+@keyframes rise3{0%{transform:translateY(0) scale(.6);opacity:0}25%{opacity:1}75%{transform:translateY(-100px) scale(1.15);opacity:0.8}100%{opacity:0}}
+
+/* buttons */
+.controls{display:flex;gap:10px;justify-content:center;margin-top:18px}
+.btn{padding:10px 16px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--gold),var(--rose));color:#111;font-weight:700;cursor:pointer}
+.btn.alt{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--card)}
+
+footer{position:absolute;right:16px;bottom:12px;font-size:12px;opacity:0.6}
+
+@media (max-width:560px){
+  .layer.l4{font-size:48px}
+  .layer.l3{font-size:42px}
+  .layer.l2{font-size:36px}
+  .layer.l1{font-size:30px}
+  .diya{width:90px}
+}
+
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="sparkle s1"></div>
+    <div class="sparkle s2"></div>
+    <div class="sparkle s3"></div><h1>Shubh Deepavali</h1>
+<p class="lead">Ek personalised 4‑D naam effect — specially for <strong>Debanjana</strong>.</p>
+
+<div class="name-4d" id="name4d" aria-hidden="false">
+  <!-- Four depth layers create the 4D illusion -->
+  <div class="layer l1">Debanjana</div>
+  <div class="layer l2">Debanjana</div>
+  <div class="layer l3">Debanjana</div>
+  <div class="layer l4">Debanjana</div>
+</div>
+
+<div class="diya-row">
+  <!-- simple diya SVG -->
+  <svg class="diya" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g transform="translate(20,40)">
+      <path d="M20 80 C40 40, 140 40, 160 80 C145 110,35 110,20 80 Z" fill="#6b3a2a"/>
+      <g transform="translate(70,-10) scale(0.9)">
+        <path d="M20 8 C30 24, 26 38, 18 50 C10 38,6 24,16 8 C18 4,22 2,20 8 Z" fill="#ffd27a"/>
+        <path d="M20 10 C28 26, 26 36, 18 46 C12 36,10 26,16 10 Z" fill="#ff8a3d" opacity="0.95"/>
+      </g>
+    </g>
+  </svg>
+
+  <div class="wish-box">
+    <p>Debanjana — Is Diwali pe tumhara har pal roshni se jagmagaaye. Khushiyon se bhara rahe har din. ✨</p>
+    <div class="controls">
+      <button class="btn" id="toggleDepth">Toggle 4D Depth</button>
+      <button class="btn alt" id="downloadBtn">Download</button>
+    </div>
+  </div>
+</div>
+
+<footer>Personalised 4‑D wish • Made for Debanjana</footer>
+
+  </div>  <script>
+    // Simple parallax / 4D interaction: layers move on mousemove
+    const stage = document.getElementById('stage');
+    const name4d = document.getElementById('name4d');
+    const layers = name4d.querySelectorAll('.layer');
+    let depthOn = true;
+
+    function handleMove(e){
+      const rect = stage.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 -> 0.5
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+      layers.forEach((el, i)=>{
+        const depth = (4 - i) * (depthOn ? 18 : 6); // front layers move less
+        const tx = -x * depth;
+        const ty = -y * depth;
+        const rz = x * (i - 2) * 6; // slight rotation
+        el.style.transform = translate3d(-50%,-50%,${(4 - i) * (i===3?0:20)}px) rotateY(${rz}deg) translateX(${tx}px) translateY(${ty}px);
+      });
+    }
+
+    stage.addEventListener('mousemove', handleMove);
+    stage.addEventListener('mouseleave', ()=>{
+      layers.forEach((el,i)=> el.style.transform = translate3d(-50%,-50%,${(4 - i) * (i===3?0:20)}px));
+    });
+
+    // Toggle depth
+    document.getElementById('toggleDepth').addEventListener('click', ()=>{
+      depthOn = !depthOn;
+      document.getElementById('toggleDepth').textContent = depthOn ? 'Toggle 4D Depth' : 'Enable Subtle Mode';
+    });
+
+    // Download HTML of the stage
+    document.getElementById('downloadBtn').addEventListener('click', ()=>{
+      const html = <!doctype html> + '
+' + document.documentElement.outerHTML;
+      const blob = new Blob([html], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'Diwali-4D-Debanjana.html'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+  </script></body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Food Ordering | FoodExpress 🍔</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ---------- GLOBAL ---------- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: #fff8f0;
+        color: #333;
+        scroll-behavior: smooth;
+      }
+
+      header {
+        background: linear-gradient(45deg, #ff6b6b, #ff3b3b);
+        color: white;
+        padding: 15px 0;
+        text-align: center;
+        font-size: 1.7em;
+        font-weight: bold;
+        letter-spacing: 1px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      nav {
+        background: #ffe3e3;
+        display: flex;
+        justify-content: center;
+        padding: 12px;
+        gap: 25px;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: #444;
+        font-weight: 600;
+        transition: 0.3s;
+      }
+
+      nav a:hover {
+        color: #ff3b3b;
+        transform: scale(1.1);
+      }
+
+      /* ---------- HERO SECTION ---------- */
+      .hero {
+        background: url("https://i.imgur.com/hX2kz0P.jpg") center/cover
+          no-repeat;
+        height: 320px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-shadow: 2px 2px 5px black;
+        font-size: 2.2em;
+        font-weight: bold;
+        animation: fadeIn 2s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* ---------- MENU ---------- */
+      .menu {
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      .menu h2 {
+        margin-bottom: 20px;
+        color: #ff6b6b;
+        font-size: 2em;
+      }
+
+      .menu-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+        justify-content: center;
+      }
+
+      .item {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        transition: 0.3s;
+      }
+
+      .item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .item img {
+        width: 100%;
+        border-radius: 15px;
+        height: 160px;
+        object-fit: cover;
+      }
+
+      .item h3 {
+        margin: 10px 0;
+        color: #333;
+      }
+
+      .item p {
+        margin: 5px 0;
+        font-weight: bold;
+        color: #ff3b3b;
+      }
+
+      .item button {
+        background: #ff6b6b;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .item button:hover {
+        background: #ff3b3b;
+        transform: scale(1.05);
+      }
+
+      /* ---------- CART ---------- */
+      #cart {
+        background: #fff0f0;
+        padding: 30px 20px;
+        margin: 40px 20px;
+        border-radius: 15px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #cart h2 {
+        color: #ff6b6b;
+        margin-bottom: 15px;
+      }
+
+      #cart-items {
+        list-style: none;
+        padding: 0;
+      }
+
+      #cart-items li {
+        padding: 8px 0;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+      }
+
+      #cart-items li button {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: red;
+        font-size: 1em;
+      }
+
+      #total {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+
+      #checkout-btn {
+        margin-top: 15px;
+        padding: 10px 25px;
+        border: none;
+        background: #ff6b6b;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      #checkout-btn:hover {
+        background: #ff3b3b;
+        transform: scale(1.05);
+      }
+
+      /* ---------- FOOTER ---------- */
+      footer {
+        background: #ff6b6b;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        font-size: 0.9em;
+        margin-top: 20px;
+      }
+
+      footer a {
+        color: #fff;
+        text-decoration: underline;
+      }
+
+      /* ---------- RESPONSIVE ---------- */
+      @media (max-width: 600px) {
+        .hero {
+          font-size: 1.5em;
+          height: 220px;
+        }
+        nav {
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>🍕 FoodExpress – Order Your Favourite Food Online</header>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#cart">Cart</a>
+    </nav>
+
+    <section id="home" class="hero">Welcome to FoodExpress 🍔</section>
+
+    <section id="menu" class="menu">
+      <h2>Our Menu</h2>
+      <div class="menu-items">
+        <div class="item">
+          <img src="https://i.imgur.com/5KcvwJ0.jpg" alt="Pizza" />
+          <h3>Cheese Pizza</h3>
+          <p>₹199</p>
+          <button onclick="addToCart('Cheese Pizza', 199)">Add to Cart</button>
+        </div>
+        <div class="item">
+          <img src="https://i.imgur.com/5nyw3kW.jpg" alt="Burger" />
+          <h3>Chicken Burger</h3>
+          <p>₹149</p>
+          <button onclick="addToCart('Chicken Burger', 149)">
+            Add to Cart
+          </button>
+        </div>
+        <div class="item">
+          <img src="https://i.imgur.com/dOHHrBx.jpg" alt="Pasta" />
+          <h3>White Sauce Pasta</h3>
+          <p>₹179</p>
+          <button onclick="addToCart('White Sauce Pasta', 179)">
+            Add to Cart
+          </button>
+        </div>
+        <div class="item">
+          <img src="https://i.imgur.com/EwkpT6C.jpg" alt="Ice Cream" />
+          <h3>Chocolate Ice Cream</h3>
+          <p>₹99</p>
+          <button onclick="addToCart('Chocolate Ice Cream', 99)">
+            Add to Cart
+          </button>
+        </div>
+        <div class="item">
+          <img src="https://i.imgur.com/j4ZsOPz.jpg" alt="Fries" />
+          <h3>French Fries</h3>
+          <p>₹89</p>
+          <button onclick="addToCart('French Fries', 89)">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="cart">
+      <h2>Your Cart 🛒</h2>
+      <ul id="cart-items"></ul>
+      <p id="total">Your cart is empty.</p>
+      <button id="checkout-btn" onclick="checkout()">Checkout</button>
+    </section>
+
+    <footer>© 2025 FoodExpress | Designed with ❤️ by Sujit</footer>
+
+    <script>
+      let cart = [];
+
+      function addToCart(item, price) {
+        cart.push({ item, price });
+        displayCart();
+      }
+
+      function displayCart() {
+        let cartList = document.getElementById('cart-items');
+        let total = 0;
+        cartList.innerHTML = '';
+        cart.forEach((product, index) => {
+          total += product.price;
+          cartList.innerHTML += `
+            <li>
+              ${product.item} - ₹${product.price}
+              <button onclick="removeItem(${index})">❌</button>
+            </li>`;
+        });
+        document.getElementById('total').innerText =
+          cart.length ? Total: ₹${total} : 'Your cart is empty.';
+      }
+
+      function removeItem(index) {
+        cart.splice(index, 1);
+        displayCart();
+      }
+
+      function checkout() {
+        if (cart.length === 0) {
+          alert('Your cart is empty!');
+        } else {
+          alert('Thank you for your order! 🍕');
+          cart = [];
+          displayCart();
+        }
+      }
+    </script>
+  </body>
+</html>
